@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\CoreController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -14,9 +16,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome');
-});
+Route::get('/',[CoreController::class,'index']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
