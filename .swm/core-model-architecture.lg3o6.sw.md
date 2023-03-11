@@ -9,11 +9,11 @@ app_version: 1.3.8
 
 Core Model is a rename of old User Model. The first User Model contain duplicate 'name' fields, as it needs a 'name' field for session and 'firstname and lastname' for table. It was bad idea for a Model, so we redesign it back to function for table only, also change its name to more conventional name, Core Model.
 
-# Migration
+## Migration
 
 Migration file helps developer to design database in simpler way. The file located at `📄 database/migrations/2023_03_06_221638_create_cores_table.php`
 
-# Factory
+## Factory
 
 Factory helps seeding table with dummy data. The file located at `📄 database/factories/CoreFactory.php`
 
@@ -45,6 +45,72 @@ Then, we use faker helper functions to generate dummy data. We can seed the mode
 27             ];
 28         }
 ```
+
+<br/>
+
+# Model
+
+The model is located at `📄 app/Models/Core.php`. It is the Eloquent ORM of Cores table.
+
+# Controller
+
+The controller is where the application logic is written. The file is located at `📄 app/Http/Controllers/CoreController.php`
+
+<br/>
+
+Since we are using Inertia, we need to import these two packages
+<!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
+### 📄 app/Http/Controllers/CoreController.php
+```hack
+7      use Inertia\Inertia;
+8      use Inertia\Response;
+```
+
+<br/>
+
+## Index
+
+<br/>
+
+Index function is called to view the Model objects
+
+Line 17<br/>
+We assign cores as Core Model objects
+
+Line 18-19<br/>
+return the data at Welcome component page with parameter Core objects
+<!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
+### 📄 app/Http/Controllers/CoreController.php
+```hack
+15         public function index(): Response
+16         {
+17             $cores = Core::all();
+18             return Inertia::render('Welcome',[
+19                 'cores'=>$cores,
+20             ]);
+21         }
+```
+
+<br/>
+
+# Route
+
+<br/>
+
+We use get requests at '/' url and use CoreController class with index method
+<!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
+### 📄 routes/web.php
+```hack
+19     Route::get('/',[CoreController::class,'index']);
+```
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
 
 <br/>
 
