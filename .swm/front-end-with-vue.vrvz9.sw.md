@@ -28,8 +28,8 @@ To use default layout, we need to import Layout
 Line 5<br/>
 This is the plugin if we want to use persistent Layout
 
-Line 6-9<br/>
-We define two properties in array before passing it down to template below
+Line 7<br/>
+We define properties here before passing it down to template below
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 resources/js/Pages/Welcome.vue
 ```vue
@@ -39,18 +39,12 @@ We define two properties in array before passing it down to template below
 4      
 5      defineOptions({ layout: Layout })
 6      defineProps({
-7          name:String,
-8          frameworks:Array,
+7          cores:Object,
+8      
 9      })
 10     
 11     </script>
 ```
-
-<br/>
-
-<br/>
-
-<br/>
 
 <br/>
 
