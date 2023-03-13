@@ -1,10 +1,6 @@
 <script setup>
-import Grid from '@/Components/Grid.vue'
-import { ref } from 'vue'
 
-const searchQuery = ref('')
-const gridColumns = ['id', 'first_name','last_name','ppi','batch']
-const gridData = defineProps({
+defineProps({
     cores:Object
 })
 </script>
