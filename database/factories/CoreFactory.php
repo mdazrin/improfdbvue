@@ -18,7 +18,9 @@ class CoreFactory extends Factory
      */
     public function definition(): array
     {
+        static $incrementing_number = 1;
         return [
+            'user_id'=>$incrementing_number++,
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'ppi' => fake()->numberBetween([1],[100]),
