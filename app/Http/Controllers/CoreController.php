@@ -14,13 +14,7 @@ class CoreController extends Controller
      */
     public function index(): Response
     {
-        $cores = Core::all()->map(fn($core)=>[
-            'id'=>$core->id,
-            'first_name'=>$core->first_name,
-            'last_name'=>$core->last_name,
-            'ppi'=>$core->ppi,
-            'batch'=>$core->batch
-        ]);
+        $cores = Core::paginate(9)->through();
 
 
         return Inertia::render('Welcome',[

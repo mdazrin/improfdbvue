@@ -33,7 +33,7 @@ defineProps({
         </tr>
         </thead>
         <tbody class="border-b">
-        <tr v-for="core in cores" :key="core.id">
+        <tr v-for="core in cores.data" :key="core.id">
             <td class="px-6 py-6">
                 {{core.id}}
             </td>
