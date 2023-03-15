@@ -2,16 +2,16 @@
 id: lg3o6
 title: Core Model Architecture
 file_version: 1.1.2
-app_version: 1.4.2
+app_version: 1.4.4
 ---
 
 # Overview
 
-Core Model is a rename of old User Model. The first User Model contain duplicate 'name' fields, as it needs a 'name' field for session and 'firstname and lastname' for table. It was bad idea for a Model, so we redesign it back to function for table only, also change its name to more conventional name, Core Model.
+Core Model is a rename of old User Model. The first User Model contain duplicate 'name' fields, as it needs a 'name' field for session and 'firstname and lastname' for table. It was a bad idea for a Model, so we redesigned it back to function for table only, also change its name to more conventional name, Core Model.
 
 ## Migration
 
-Migration file helps developer to design database in simpler way. The file located at `📄 database/migrations/2023_03_06_221638_create_cores_table.php`
+Migration file helps developer to design database schema in simpler way. The file located at `📄 database/migrations/2023_03_06_221638_create_cores_table.php`
 
 ## Factory
 
@@ -54,6 +54,14 @@ Then, we use faker helper functions to generate dummy data. We can seed the mode
 
 The model is located at `📄 app/Models/Core.php`. It is the Eloquent ORM of Cores table.
 
+<br/>
+
+<div align="center"><img src="https://firebasestorage.googleapis.com/v0/b/swimmio-content/o/repositories%2FZ2l0aHViJTNBJTNBaW1wcm9mZGJ2dWUlM0ElM0FtZGF6cmlu%2Fd6c08508-1758-40a6-8642-a9d200b4fd42.png?alt=media&token=bc5e7e32-f763-4b5e-b988-bc2d8a216b22" style="width:'100%'"/></div>
+
+<br/>
+
+<br/>
+
 # Controller
 
 The controller is where the application logic is written. The file is located at `📄 app/Http/Controllers/CoreController.php`
@@ -72,26 +80,30 @@ Since we are using Inertia, we need to import these two packages
 
 ## Index
 
+Index function is called to view all the Core Model objects
+
 <br/>
 
-Index function is called to view the Model objects
+<div align="center"><img src="https://firebasestorage.googleapis.com/v0/b/swimmio-content/o/repositories%2FZ2l0aHViJTNBJTNBaW1wcm9mZGJ2dWUlM0ElM0FtZGF6cmlu%2F12a093ae-9ec3-4b30-9e12-7691be8de54f.png?alt=media&token=47a06a52-291b-44e5-a259-c4830c6fd1a7" style="width:'100%'"/></div>
 
-Line 17<br/>
-We assign cores as Core Model objects
+<br/>
 
-Line 18-19<br/>
+Line 17-22<br/>
+We assign cores as Core Model objects. We use **pagination** method in Laravel to paginate a number of objects per page, but we filter what data will be passed into the client using **through** method
+
+Line 26-27<br/>
 return the data at Welcome component page with parameter Core objects
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 app/Http/Controllers/CoreController.php
 ```hack
 15         public function index(): Response
 16         {
-17             $cores = Core::all()->map(fn($core)=>[
-18                 'id'=>$core->id,
-19                 'first_name'=>$core->first_name,
-20                 'last_name'=>$core->last_name,
-21                 'ppi'=>$core->ppi,
-22                 'batch'=>$core->batch
+17             $cores = Core::paginate(10)->through(fn($core) => [
+18                 'id' => $core->id,
+19                 'first_name' => $core->first_name,
+20                 'last_name' => $core->last_name,
+21                 'ppi' => $core->ppi,
+22                 'batch' => $core->batch,
 23             ]);
 24     
 25     
@@ -113,6 +125,28 @@ We use get requests at '/' url and use CoreController class with index method
 ```hack
 19     Route::get('/',[CoreController::class,'index']);
 ```
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
 
 <br/>
 
