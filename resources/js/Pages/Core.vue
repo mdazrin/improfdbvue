@@ -61,7 +61,7 @@ const props = defineProps({
 
 <div>
 
-    <Pagination :data="cores" />
+    <Pagination :cores="cores" />
 
 </div>
 
