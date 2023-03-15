@@ -1,8 +1,14 @@
 <script setup>
+import Pagination from "@/Components/Pagination.vue";
 
-defineProps({
-    cores:Object
-})
+const props = defineProps({
+    cores: {
+        type: Object,
+        default: () => ({}),
+    },
+});
+
+
 </script>
 
 <template>
@@ -53,7 +59,11 @@ defineProps({
         </tbody>
     </table>
 
+<div>
 
+    <Pagination :data="cores" />
+
+</div>
 
 
 </template>
