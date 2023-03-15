@@ -23,7 +23,7 @@ class CoreController extends Controller
         ]);
 
 
-        return Inertia::render('Welcome',[
+        return Inertia::render('Core',[
             'cores'=>$cores,
         ]);
     }
