@@ -28,11 +28,14 @@ First, we passed objects from Core Controller by assigning them as variable core
 ### 📄 resources/js/Pages/Core.vue
 ```vue
 4      defineProps({
-5          cores:Object
-6      })
-7      </script>
-8      
-9      <template>
+5          cores:{
+6              type: Object,
+7              default: () => ({}),
+8          },
+9      })
+10     </script>
+11     
+12     <template>
 ```
 
 <br/>
@@ -41,7 +44,7 @@ Then, we passed variable cores to variable data in the pagination component
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 resources/js/Pages/Core.vue
 ```vue
-58             <Pagination :data="cores" />
+61             <Pagination :data="cores" />
 ```
 
 <br/>
@@ -94,12 +97,6 @@ k is key
 22             />
 23         </div>
 ```
-
-<br/>
-
-<br/>
-
-<br/>
 
 <br/>
 
