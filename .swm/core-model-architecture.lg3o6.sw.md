@@ -2,12 +2,12 @@
 id: lg3o6
 title: Core Model Architecture
 file_version: 1.1.2
-app_version: 1.4.4
+app_version: 1.4.5
 ---
 
 # Overview
 
-Core Model is a rename of old User Model. The first User Model contain duplicate 'name' fields, as it needs a 'name' field for session and 'firstname and lastname' for table. It was a bad idea for a Model, so we redesigned it back to function for table only, also change its name to more conventional name, Core Model.
+Core Model is a rename of old User Model. The first User Model contain duplicate 'name' fields, as it needs a 'name' field for session and 'firstname and lastname' for table. Since it was a bad code implementation for a Model, so we redesigned it back to function for table only, also change its name to more conventional name, Core Model.
 
 ## Migration
 
@@ -52,7 +52,7 @@ Then, we use faker helper functions to generate dummy data. We can seed the mode
 
 # Model
 
-The model is located at `📄 app/Models/Core.php`. It is the Eloquent ORM of Cores table.
+The model is located at `📄 app/Models/Core.php`. It is the Eloquent Object-Relational Mapping (ORM) of Cores table.
 
 <br/>
 
@@ -80,7 +80,7 @@ Since we are using Inertia, we need to import these two packages
 
 ## Index
 
-Index function is called to view all the Core Model objects
+Index function is design to view all the Core Model objects
 
 <br/>
 
@@ -92,7 +92,7 @@ Line 17-22<br/>
 We assign cores as Core Model objects. We use **pagination** method in Laravel to paginate a number of objects per page, but we filter what data will be passed into the client using **through** method
 
 Line 26-27<br/>
-return the data at Welcome component page with parameter Core objects
+return the data at Core component page with parameter Core objects
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 app/Http/Controllers/CoreController.php
 ```hack
@@ -107,7 +107,7 @@ return the data at Welcome component page with parameter Core objects
 23             ]);
 24     
 25     
-26             return Inertia::render('Welcome',[
+26             return Inertia::render('Core',[
 27                 'cores'=>$cores,
 28             ]);
 29         }
@@ -125,20 +125,6 @@ We use get requests at '/' url and use CoreController class with index method
 ```hack
 19     Route::get('/',[CoreController::class,'index']);
 ```
-
-<br/>
-
-<br/>
-
-<br/>
-
-<br/>
-
-<br/>
-
-<br/>
-
-<br/>
 
 <br/>
 
