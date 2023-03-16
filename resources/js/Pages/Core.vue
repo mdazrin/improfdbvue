@@ -1,11 +1,29 @@
 <script setup>
+import {Head, router} from "@inertiajs/vue3";
 import Pagination from '@/Components/Pagination.vue'
+import {ref,watch} from "vue";
 
-defineProps({
+const props = defineProps({
     cores:{
         type: Object,
         default: () => ({}),
     },
+    filters: {
+        type: Object,
+        default: () => ({}),
+    },
+})
+
+let search = ref(props.filters.search);
+
+watch(search,(value) => {
+    router.get(
+        '/',
+        { search: value },
+        {
+            preserveState: true,
+            replace:true
+        })
 })
 </script>
 
@@ -15,7 +33,12 @@ defineProps({
             My App
         </title>
     </Head>
-    <h1>Welcome</h1>
+    <input
+        type="text"
+        v-model="search"
+        placeholder="Search..."
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-60 p-2.5 "
+    />
     <table class="table-fixed mx-auto mt-10">
         <thead class="bg-blue-100">
         <tr>
@@ -58,7 +81,7 @@ defineProps({
     </table>
 
     <div>
-        <Pagination :data="cores" />
+        <Pagination :data="props.cores" />
     </div>
 
 

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Core;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -14,13 +15,18 @@ class CoreController extends Controller
      */
     public function index(): Response
     {
-        $cores = Core::paginate(10)->through(fn($core) => [
-            'id' => $core->id,
-            'first_name' => $core->first_name,
-            'last_name' => $core->last_name,
-            'ppi' => $core->ppi,
-            'batch' => $core->batch,
-        ]);
+        $cores = Core::query()
+            ->when(Request::input('search'),function($query,$search){
+                $query->where('first_name', 'like', '%' . $search . '%');
+            })
+            ->paginate(10)
+            ->through(fn($core) => [
+                'id' => $core->id,
+                'first_name' => $core->first_name,
+                'last_name' => $core->last_name,
+                'ppi' => $core->ppi,
+                'batch' => $core->batch,
+        ])->withQueryString();
 
 
         return Inertia::render('Core',[
