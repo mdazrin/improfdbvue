@@ -59,9 +59,19 @@ const props = defineProps({
         </tbody>
     </table>
 
+<<<<<<< Updated upstream:resources/js/Pages/Core.vue
 <div>
 
     <Pagination :cores="cores" />
+=======
+    <div>
+        <link
+            v-for="link in cores.links"
+            :href="link.url"
+            v-html="link.label">
+    </div>
+
+>>>>>>> Stashed changes:resources/js/Pages/Welcome.vue
 
 </div>
 
