@@ -2,7 +2,10 @@
 import Pagination from '@/Components/Pagination.vue'
 
 defineProps({
-    cores:Object
+    cores:{
+        type: Object,
+        default: () => ({}),
+    },
 })
 </script>
 
