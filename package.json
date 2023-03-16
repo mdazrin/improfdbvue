@@ -17,5 +17,8 @@
         "unplugin-vue-define-options": "^1.2.4",
         "vite": "^4.0.0",
         "vue": "^3.2.41"
+    },
+    "dependencies": {
+        "lodash": "^4.17.21"
     }
 }
