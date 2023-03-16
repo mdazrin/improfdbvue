@@ -2,6 +2,7 @@
 import {Head, router} from "@inertiajs/vue3";
 import Pagination from '@/Components/Pagination.vue'
 import {ref,watch} from "vue";
+import {debounce} from "lodash";
 
 const props = defineProps({
     cores:{
@@ -16,7 +17,7 @@ const props = defineProps({
 
 let search = ref(props.filters.search);
 
-watch(search,(value) => {
+watch(search,debounce(function (value){
     router.get(
         '/',
         { search: value },
@@ -24,7 +25,7 @@ watch(search,(value) => {
             preserveState: true,
             replace:true
         })
-})
+},300));
 </script>
 
 <template>
