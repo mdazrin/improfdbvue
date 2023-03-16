@@ -1,14 +1,8 @@
 <script setup>
-import Pagination from "@/Components/Pagination.vue";
 
-const props = defineProps({
-    cores: {
-        type: Object,
-        default: () => ({}),
-    },
-});
-
-
+defineProps({
+    cores:Object
+})
 </script>
 
 <template>
@@ -59,6 +53,7 @@ const props = defineProps({
         </tbody>
     </table>
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream:resources/js/Pages/Core.vue
 <div>
 
@@ -72,8 +67,9 @@ const props = defineProps({
     </div>
 
 >>>>>>> Stashed changes:resources/js/Pages/Welcome.vue
+=======
+>>>>>>> parent of b23c943... Pagination links
 
-</div>
 
 
 </template>
