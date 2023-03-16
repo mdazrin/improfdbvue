@@ -1,4 +1,5 @@
 <script setup>
+import Pagination from '@/Components/Pagination.vue'
 
 defineProps({
     cores:Object
@@ -53,22 +54,14 @@ defineProps({
         </tbody>
     </table>
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream:resources/js/Pages/Core.vue
-<div>
-
-    <Pagination :cores="cores" />
-=======
     <div>
-        <link
-            v-for="link in cores.links"
-            :href="link.url"
-            v-html="link.label">
+        <Pagination :data="cores" />
     </div>
 
->>>>>>> Stashed changes:resources/js/Pages/Welcome.vue
-=======
->>>>>>> parent of b23c943... Pagination links
+
+
+
+
 
 
 
