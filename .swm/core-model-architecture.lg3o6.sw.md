@@ -54,14 +54,6 @@ Then, we use faker helper functions to generate dummy data. We can seed the mode
 
 The model is located at `📄 app/Models/Core.php`. It is the Eloquent Object-Relational Mapping (ORM) of Cores table.
 
-<br/>
-
-<div align="center"><img src="https://firebasestorage.googleapis.com/v0/b/swimmio-content/o/repositories%2FZ2l0aHViJTNBJTNBaW1wcm9mZGJ2dWUlM0ElM0FtZGF6cmlu%2Fd6c08508-1758-40a6-8642-a9d200b4fd42.png?alt=media&token=bc5e7e32-f763-4b5e-b988-bc2d8a216b22" style="width:'100%'"/></div>
-
-<br/>
-
-<br/>
-
 # Controller
 
 The controller is where the application logic is written. The file is located at `📄 app/Http/Controllers/CoreController.php`
@@ -72,8 +64,8 @@ Since we are using Inertia, we need to import these two packages
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 app/Http/Controllers/CoreController.php
 ```hack
-7      use Inertia\Inertia;
-8      use Inertia\Response;
+8      use Inertia\Inertia;
+9      use Inertia\Response;
 ```
 
 <br/>
@@ -81,10 +73,6 @@ Since we are using Inertia, we need to import these two packages
 ## Index
 
 Index function is design to view all the Core Model objects
-
-<br/>
-
-<div align="center"><img src="https://firebasestorage.googleapis.com/v0/b/swimmio-content/o/repositories%2FZ2l0aHViJTNBJTNBaW1wcm9mZGJ2dWUlM0ElM0FtZGF6cmlu%2F12a093ae-9ec3-4b30-9e12-7691be8de54f.png?alt=media&token=47a06a52-291b-44e5-a259-c4830c6fd1a7" style="width:'100%'"/></div>
 
 <br/>
 
@@ -96,21 +84,31 @@ return the data at Core component page with parameter Core objects
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 app/Http/Controllers/CoreController.php
 ```hack
-15         public function index(): Response
-16         {
-17             $cores = Core::paginate(10)->through(fn($core) => [
-18                 'id' => $core->id,
-19                 'first_name' => $core->first_name,
-20                 'last_name' => $core->last_name,
-21                 'ppi' => $core->ppi,
-22                 'batch' => $core->batch,
-23             ]);
-24     
-25     
-26             return Inertia::render('Core',[
-27                 'cores'=>$cores,
-28             ]);
-29         }
+16         public function index(): Response
+17         {
+18             $request = Request::input('search');
+19             $cores = Core::query()
+20                 ->orderBy('first_name')
+21                 ->when($request,function($query,$search){
+22                     $query->where('first_name', 'like', '%' . $search . '%')
+23                         ->OrWhere('last_name', 'like', '%' . $search . '%')
+24                         ->OrWhere('ppi', 'like', '%' . $search . '%')
+25                         ->OrWhere('batch', 'like', '%' . $search . '%');
+26                 })
+27                 ->paginate(10)
+28                 ->through(fn($core) => [
+29                     'first_name' => $core->first_name,
+30                     'last_name' => $core->last_name,
+31                     'ppi' => $core->ppi,
+32                     'batch' => $core->batch,
+33             ])->withQueryString();
+34     
+35     
+36     
+37             return Inertia::render('Core',[
+38                 'cores'=>$cores,
+39             ]);
+40         }
 ```
 
 <br/>
@@ -125,12 +123,6 @@ We use get requests at '/' url and use CoreController class with index method
 ```hack
 19     Route::get('/',[CoreController::class,'index']);
 ```
-
-<br/>
-
-<br/>
-
-<br/>
 
 <br/>
 
