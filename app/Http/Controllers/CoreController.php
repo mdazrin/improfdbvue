@@ -15,18 +15,23 @@ class CoreController extends Controller
      */
     public function index(): Response
     {
+        $request = Request::input('search');
         $cores = Core::query()
-            ->when(Request::input('search'),function($query,$search){
-                $query->where('first_name', 'like', '%' . $search . '%');
+            ->orderBy('first_name')
+            ->when($request,function($query,$search){
+                $query->where('first_name', 'like', '%' . $search . '%')
+                    ->OrWhere('last_name', 'like', '%' . $search . '%')
+                    ->OrWhere('ppi', 'like', '%' . $search . '%')
+                    ->OrWhere('batch', 'like', '%' . $search . '%');
             })
             ->paginate(10)
             ->through(fn($core) => [
-                'id' => $core->id,
                 'first_name' => $core->first_name,
                 'last_name' => $core->last_name,
                 'ppi' => $core->ppi,
                 'batch' => $core->batch,
         ])->withQueryString();
+
 
 
         return Inertia::render('Core',[

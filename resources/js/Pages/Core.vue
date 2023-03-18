@@ -40,12 +40,16 @@ watch(search,debounce(function (value){
         placeholder="Search..."
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-60 p-2.5 "
     />
+    <select id="cars" name="cars">
+        <option value="volvo">First Name</option>
+        <option value="saab">Last Name</option>
+        <option value="mercedes">PPI</option>
+        <option value="audi">Batch</option>
+    </select>
+    <input type="submit" value="Submit">
     <table class="table-fixed mx-auto mt-10">
         <thead class="bg-blue-100">
         <tr>
-            <td class="px-6 py-6">
-                Id
-            </td>
             <td class="px-6 py-6">
                 First Name
             </td>
@@ -62,9 +66,6 @@ watch(search,debounce(function (value){
         </thead>
         <tbody class="border-b">
         <tr v-for="core in cores.data" :key="core.id">
-            <td class="px-6 py-6">
-                {{core.id}}
-            </td>
             <td class="px-6 py-6">
                 {{core.first_name}}
             </td>
@@ -84,12 +85,5 @@ watch(search,debounce(function (value){
     <div>
         <Pagination :data="props.cores" />
     </div>
-
-
-
-
-
-
-
 
 </template>
