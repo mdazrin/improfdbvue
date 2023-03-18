@@ -2,7 +2,7 @@
 id: bezgp
 title: IMProf DB System Code Doc
 file_version: 1.1.2
-app_version: 1.4.4
+app_version: 1.4.5
 ---
 
 <!-- Intro - Do not remove this comment -->
@@ -11,7 +11,9 @@ app_version: 1.4.4
 <br/>
 
 <!-- Steps - Do not remove this comment -->
-1. [Core Model Architecture](core-model-architecture.lg3o6.sw.md)
+1. [Front-End with Vue](front-end-with-vue.vrvz9.sw.md)
+2. [Core Model Architecture](core-model-architecture.lg3o6.sw.md)
+3. [Pagination](pagination.yap1q.sw.md)
 
 
 <br/>

@@ -5,17 +5,34 @@ file_version: 1.1.2
 app_version: 1.4.5
 ---
 
-# Overview
-
-This is the documentation of the 'Core.vue' page. The file is located at `📄 resources/js/Pages/Core.vue`
+# Flowchart
 
 <br/>
 
-# Code Execution (Core.vue)
+<!--MERMAID {width:100}-->
+```mermaid
+flowchart LR
+B-->C
+subgraph Core
+A[define cores from server] -->B(send cores as data)
+end
+subgraph Pagination
+C(define data) -->D{links.length > 3?}
+D-->|Yes| E[View]
+D-->|No| F[No View]
+end
+```
+<!--MCONTENT {content: "flowchart LR<br/>\nB\\-\\-\\>C<br/>\nsubgraph Core<br/>\nA\\[define cores from server\\] \\-\\-\\>B(send cores as data)<br/>\nend<br/>\nsubgraph Pagination<br/>\nC(define data) \\-\\-\\>D{links.length > 3?}<br/>\nD\\-\\-\\>|Yes| E\\[View\\]<br/>\nD\\-\\-\\>|No| F\\[No View\\]<br/>\nend<br/>"} --->
 
 <br/>
 
-We passed objects from server by assigning them as variable **cores**. The variable name must be same as variable passed from server
+<br/>
+
+# Core Component
+
+<br/>
+
+Define cores from server
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 resources/js/Pages/Core.vue
 ```vue
@@ -28,7 +45,7 @@ We passed objects from server by assigning them as variable **cores**. The varia
 
 <br/>
 
-Then, we passed variable cores to variable data in the pagination component
+Send cores as data
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 resources/js/Pages/Core.vue
 ```vue
@@ -37,7 +54,7 @@ Then, we passed variable cores to variable data in the pagination component
 
 <br/>
 
-And we import the component inside the script setup
+Import the component
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 resources/js/Pages/Core.vue
 ```vue
@@ -46,11 +63,11 @@ And we import the component inside the script setup
 
 <br/>
 
-# Code Execution (Pagination.vue)
+# Pagination Component
 
 <br/>
 
-Inside this component, we define **data** as an object
+Define data
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 resources/js/Components/Pagination.vue
 ```vue
@@ -65,10 +82,10 @@ Inside this component, we define **data** as an object
 <br/>
 
 Line 14<br/>
-Then, we will check **data links length** property. If more than 3, we execute
+Check **data links length** property. If more than 3, execute
 
 Line 16-21<br/>
-If more than 3, we will iterate three properties, **Active**, **url** and **label** properties. **link** and **k** are local variables inside for loop.<br/>
+Iterate three properties, **Active**, **url** and **label** properties. **link** and **k** are local variables inside for loop.<br/>
 **link** is object inside collection. **k** is key
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 resources/js/Components/Pagination.vue

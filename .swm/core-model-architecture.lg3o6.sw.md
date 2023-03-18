@@ -72,7 +72,7 @@ Since we are using Inertia, we need to import these two packages
 
 ## Index
 
-Index function is design to view all the Core Model objects
+Index function is design to view Core Model in table
 
 <br/>
 
@@ -123,8 +123,6 @@ We use get requests at '/' url and use CoreController class with index method
 ```hack
 19     Route::get('/',[CoreController::class,'index']);
 ```
-
-<br/>
 
 <br/>
 
