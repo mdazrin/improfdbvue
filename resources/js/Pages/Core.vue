@@ -26,6 +26,13 @@ watch(search,debounce(function (value){
             replace:true
         })
 },300));
+
+
+function colSort(field){
+    props.filters.field = field;
+    console.log(field)
+}
+
 </script>
 
 <template>
@@ -43,19 +50,19 @@ watch(search,debounce(function (value){
     <table class="table-fixed mx-auto mt-10">
         <thead class="bg-blue-100">
         <tr>
-            <td class="px-6 py-6">
+            <td class="px-6 py-6" @click="colSort('id')">
                 Id
             </td>
-            <td class="px-6 py-6">
+            <td class="px-6 py-6" @click="colSort('first_name')">
                 First Name
             </td>
-            <td class="px-6 py-6">
+            <td class="px-6 py-6" @click="colSort('last_name')">
                 Last Name
             </td>
-            <td class="px-6 py-6">
+            <td class="px-6 py-6" @click="colSort('ppi')">
                 PPI
             </td>
-            <td class="px-6 py-6">
+            <td class="px-6 py-6" @click="colSort('batch')">
                 Batch
             </td>
         </tr>

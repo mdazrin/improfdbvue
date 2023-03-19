@@ -17,7 +17,7 @@ class CoreController extends Controller
     {
         $cores = Core::query()
             ->orderBy('first_name')
-            ->when(Request::input('search'),function($query,$search){
+            ->when(request('search'),function($query,$search){
                 $query->where('first_name', 'like', '%' . $search . '%');
             })
             ->paginate(10)
@@ -33,6 +33,7 @@ class CoreController extends Controller
 
         return Inertia::render('Core',[
             'cores'=>$cores,
+            'filters' => Request::only(['search'])
         ]);
     }
 
