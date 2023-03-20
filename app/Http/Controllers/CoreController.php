@@ -24,7 +24,7 @@ class CoreController extends Controller
             ->when(request('search'),function($query,$search){
                 $query->where('first_name', 'like', '%' . $search . '%');
             })
-            ->paginate(10)
+            ->paginate(8)
             ->through(fn($core) => [
                 'id' => $core->id,
                 'first_name' => $core->first_name,
