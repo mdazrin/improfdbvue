@@ -1,8 +1,6 @@
 <script setup>
-import {Head, router} from "@inertiajs/vue3";
+import {Head, useForm} from "@inertiajs/vue3";
 import Pagination from '@/Components/Pagination.vue'
-import {reactive, watchEffect} from "vue";
-import {pickBy} from "lodash";
 
 
 const props = defineProps({
@@ -10,35 +8,15 @@ const props = defineProps({
         type: Object,
        required:true
     },
-    filters: {
-        type: Object,
-        default:true
-    },
+
 })
 
-let params = reactive({
+const form = useForm({
+    search: null,
+    field: null,
+    direction: null,
 
-    search: props.filters.search,
-    field: props.filters.field,
-    direction: props.filters.direction,
-
-});
-
-function colSort(field) {
-
-    params.field = field;
-    params.direction = params.direction === 'asc' ? 'desc' : 'asc';
-    console.log(params.direction);
-
-}
-
-watchEffect(() => {
-
-    let filteredParams = pickBy(params);
-    router.get('/', filteredParams, { replace: true, preserveState: true });
-
-});
-
+})
 
 
 </script>
@@ -49,29 +27,47 @@ watchEffect(() => {
             My App
         </title>
     </Head>
-    <input
-        type="text"
-        v-model="params.search"
-        placeholder="Search..."
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-60 p-2.5 "
-    />
+
+
+    <form @submit.prevent="form.get('/',{replace:true,preserveState:true})">
+        <input
+            type="text"
+            v-model="form.search"
+            placeholder="Search..."
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-60 p-2.5 "
+        />
+        <input
+            type="text"
+            v-model="form.field"
+            placeholder="Select a fieldname"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-60 p-2.5 "
+        />
+        <input
+            type="text"
+            v-model="form.direction"
+            placeholder="Asc or desc"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-60 p-2.5 "
+        />
+        <button type="submit">Submit</button>
+    </form>
+
 
     <table class="table-fixed mx-auto mt-10">
         <thead class="bg-blue-100">
         <tr>
-            <td class="px-6 py-6" @click="colSort('id')">
+            <td class="px-6 py-6">
                 Id
             </td>
-            <td class="px-6 py-6" @click="colSort('first_name')">
+            <td class="px-6 py-6">
                 First Name
             </td>
-            <td class="px-6 py-6" @click="colSort('last_name')">
+            <td class="px-6 py-6">
                 Last Name
             </td>
-            <td class="px-6 py-6" @click="colSort('ppi')">
+            <td class="px-6 py-6">
                 PPI
             </td>
-            <td class="px-6 py-6" @click="colSort('batch')">
+            <td class="px-6 py-6">
                 Batch
             </td>
         </tr>

@@ -16,31 +16,28 @@ class CoreController extends Controller
     public function index(): Response
     {
 
-        request()->validate([
+        $field = request('field') ?? 'first_name';
+        $direction = request('direction') ?? 'asc';
 
-            'direction' => ['in:asc,desc'],
-            'field' => ['in:id,first_name,last_name,ppi,batch']
+        $cores = Core::query()
+            ->orderBy($field,$direction)
+            ->when(request('search'),function($query,$search){
+                $query->where('first_name', 'like', '%' . $search . '%');
+            })
+            ->paginate(10)
+            ->through(fn($core) => [
+                'id' => $core->id,
+                'first_name' => $core->first_name,
+                'last_name' => $core->last_name,
+                'ppi' => $core->ppi,
+                'batch' => $core->batch,
+            ])->withQueryString();
+
+
+
+        return Inertia::render('Core',[
+            'cores'=>$cores,
         ]);
-
-        $query = Core::query();
-
-        if (request('search')) {
-
-            $query->where('first_name', 'LIKE', '%'.request('search').'%');
-
-        }
-
-        if (request()->has(['field', 'direction'])) {
-
-            $query->orderBy(request('field'), request('direction'));
-        }
-
-        return Inertia::render('Core', [
-
-            'cores' => $query->paginate()->withQueryString(),
-            'filters' => request()->all(['search', 'field', 'direction'])
-        ]);
-
     }
 
     /**
