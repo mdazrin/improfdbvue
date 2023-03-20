@@ -29,9 +29,21 @@ watch(search,debounce(function (value){
 
 
 function colSort(field){
-    props.filters.field = field;
-    console.log(field)
+    props.filters.field = field
 }
+
+let field = ref(props.filters.field);
+
+watch(field,debounce(function (value){
+    router.get(
+        '/',
+        { field: value },
+        {
+            preserveState: true,
+            replace:true
+        })
+},300));
+
 
 </script>
 
@@ -45,6 +57,12 @@ function colSort(field){
         type="text"
         v-model="search"
         placeholder="Search..."
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-60 p-2.5 "
+    />
+    <input
+        type="text"
+        v-model="field"
+        placeholder="column"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-60 p-2.5 "
     />
     <table class="table-fixed mx-auto mt-10">

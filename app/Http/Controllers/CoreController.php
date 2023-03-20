@@ -15,8 +15,10 @@ class CoreController extends Controller
      */
     public function index(): Response
     {
+
+        $field = request('field') ?? 'first_name';
         $cores = Core::query()
-            ->orderBy('first_name')
+            ->orderBy($field)
             ->when(request('search'),function($query,$search){
                 $query->where('first_name', 'like', '%' . $search . '%');
             })
@@ -33,7 +35,7 @@ class CoreController extends Controller
 
         return Inertia::render('Core',[
             'cores'=>$cores,
-            'filters' => Request::only(['search'])
+            'filters' => Request::only(['search','field'])
         ]);
     }
 
