@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Core;
-//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+
 
 class CoreController extends Controller
 {
@@ -16,27 +16,31 @@ class CoreController extends Controller
     public function index(): Response
     {
 
-        $field = request('field') ?? 'first_name';
-        $cores = Core::query()
-            ->orderBy($field)
-            ->when(request('search'),function($query,$search){
-                $query->where('first_name', 'like', '%' . $search . '%');
-            })
-            ->paginate(10)
-            ->through(fn($core) => [
-                'id' => $core->id,
-                'first_name' => $core->first_name,
-                'last_name' => $core->last_name,
-                'ppi' => $core->ppi,
-                'batch' => $core->batch,
-            ])->withQueryString();
+        request()->validate([
 
-
-
-        return Inertia::render('Core',[
-            'cores'=>$cores,
-            'filters' => Request::only(['search','field'])
+            'direction' => ['in:asc,desc'],
+            'field' => ['in:id,first_name,last_name,ppi,batch']
         ]);
+
+        $query = Core::query();
+
+        if (request('search')) {
+
+            $query->where('first_name', 'LIKE', '%'.request('search').'%');
+
+        }
+
+        if (request()->has(['field', 'direction'])) {
+
+            $query->orderBy(request('field'), request('direction'));
+        }
+
+        return Inertia::render('Core', [
+
+            'cores' => $query->paginate()->withQueryString(),
+            'filters' => request()->all(['search', 'field', 'direction'])
+        ]);
+
     }
 
     /**

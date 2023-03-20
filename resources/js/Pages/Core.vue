@@ -1,48 +1,44 @@
 <script setup>
 import {Head, router} from "@inertiajs/vue3";
 import Pagination from '@/Components/Pagination.vue'
-import {ref,watch} from "vue";
-import {debounce} from "lodash";
+import {reactive, watchEffect} from "vue";
+import {pickBy} from "lodash";
+
 
 const props = defineProps({
     cores:{
         type: Object,
-        default: () => ({}),
+       required:true
     },
     filters: {
         type: Object,
-        default: () => ({}),
+        default:true
     },
 })
 
-let search = ref(props.filters.search);
+let params = reactive({
 
-watch(search,debounce(function (value){
-    router.get(
-        '/',
-        { search: value },
-        {
-            preserveState: true,
-            replace:true
-        })
-},300));
+    search: props.filters.search,
+    field: props.filters.field,
+    direction: props.filters.direction,
 
+});
 
-function colSort(field){
-    props.filters.field = field
+function colSort(field) {
+
+    params.field = field;
+    params.direction = params.direction === 'asc' ? 'desc' : 'asc';
+    console.log(params.direction);
+
 }
 
-let field = ref(props.filters.field);
+watchEffect(() => {
 
-watch(field,debounce(function (value){
-    router.get(
-        '/',
-        { field: value },
-        {
-            preserveState: true,
-            replace:true
-        })
-},300));
+    let filteredParams = pickBy(params);
+    router.get('/', filteredParams, { replace: true, preserveState: true });
+
+});
+
 
 
 </script>
@@ -55,16 +51,11 @@ watch(field,debounce(function (value){
     </Head>
     <input
         type="text"
-        v-model="search"
+        v-model="params.search"
         placeholder="Search..."
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-60 p-2.5 "
     />
-    <input
-        type="text"
-        v-model="field"
-        placeholder="column"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-60 p-2.5 "
-    />
+
     <table class="table-fixed mx-auto mt-10">
         <thead class="bg-blue-100">
         <tr>
